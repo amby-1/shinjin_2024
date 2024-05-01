@@ -405,7 +405,61 @@ pause mouse
 ```
 
 ### MATLABの例
+```matlab
+%% サンプルプログラム
 
+
+%% インポート オプションの設定およびデータのインポート
+opts = delimitedTextImportOptions("NumVariables", 3);
+
+% 範囲と区切り記号の指定
+opts.DataLines = [1, Inf];
+opts.Delimiter = ",";
+
+% 列名と型の指定
+opts.VariableNames = ["VarName1", "VarName2", "VarName3"];
+opts.VariableTypes = ["double", "double", "double"];
+
+% ファイル レベルのプロパティを指定
+opts.ExtraColumnsRule = "ignore";
+opts.EmptyLineRule = "read";
+
+%% データのインポート
+% １種類目
+% 同一階層に，ファイル"data_runge.dat" を置いた場合
+tbl = readtable("data_runge.dat", opts);
+
+% 出力型への変換
+%  それぞれベクトルとして保存
+time1 = tbl.VarName1;
+x1 = tbl.VarName2;
+dx1 = tbl.VarName3;
+
+% ２種類目
+% 同一階層に，ファイル"data_test.dat" を置いた場合
+tbl = readtable("data_test.dat", opts);
+
+% 出力型への変換
+%  それぞれベクトルとして保存
+time2 = tbl.VarName1;
+x2 = tbl.VarName2;
+dx2 = tbl.VarName3;
+
+% 同じようにすれば何個でも読み込めます．．．．
+
+% 一時変数のクリア
+clear opts tbl
+
+%% データをプロットする
+figure(1)
+hold on 
+plot(time1, x1, '-') 
+plot(time2, x2, '-')
+xlabel('time [s]')
+ylabel('Position x [m]')
+legend('runge', 'test')
+hold off
+```
 
 ## プログラムの妥当性の検証
 実装したプログラムがうまく動いているか，バグがないかを調べる必要がある．
