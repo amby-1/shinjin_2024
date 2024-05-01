@@ -461,6 +461,9 @@ xlabel('time [s]')
 ylabel('Position x [m]')
 legend('runge', 'test')
 hold off
+% 図を保存
+exportgraphics(gcf, 'figname.png')
+
 ```
 
 ## プログラムの妥当性の検証
